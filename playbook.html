@@ -1,0 +1,498 @@
+<title>The AI-Native Research Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --paper: #F6F7F9;
+    --paper-2: #EDEFF3;
+    --ink: #1E2530;
+    --ink-2: #4E5766;
+    --rule: #D3D8E0;
+    --human: #9E2A2B;
+    --human-soft: #F4E3E3;
+    --agent: #3A5A85;
+    --agent-soft: #E1E8F2;
+    --code-bg: #ECEFF3;
+    --max: 68ch;
+    --wide: 960px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #14181F;
+      --paper-2: #1C2129;
+      --ink: #E6E9EE;
+      --ink-2: #A6AEBB;
+      --rule: #333B47;
+      --human: #E07A7A;
+      --human-soft: #3A2224;
+      --agent: #8FB0DE;
+      --agent-soft: #1F2B3C;
+      --code-bg: #1C2129;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #14181F;
+    --paper-2: #1C2129;
+    --ink: #E6E9EE;
+    --ink-2: #A6AEBB;
+    --rule: #333B47;
+    --human: #E07A7A;
+    --human-soft: #3A2224;
+    --agent: #8FB0DE;
+    --agent-soft: #1F2B3C;
+    --code-bg: #1C2129;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  h1, h2, h3, h4 {
+    font-family: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    line-height: 1.2;
+    text-wrap: balance;
+    margin: 0;
+  }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); letter-spacing: -0.01em; }
+  h2 { font-size: 1.9rem; margin-top: 3.5rem; margin-bottom: 1rem; }
+  h3 { font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.5rem; }
+  p { margin: 0 0 1.1rem; }
+  a { color: var(--agent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--human); outline-offset: 2px; }
+  code, .file {
+    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 0.88em;
+    background: var(--code-bg);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+  }
+  pre {
+    font-family: "IBM Plex Mono", Menlo, Consolas, monospace;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    background: var(--code-bg);
+    padding: 1rem 1.2rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 0 0 1.2rem;
+  }
+  pre code { background: none; padding: 0; font-size: inherit; }
+  .eyebrow {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    font-weight: 500;
+  }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.25rem; }
+  .wide { max-width: var(--wide); margin: 0 auto; padding: 0 1.25rem; }
+
+  /* Header */
+  header.masthead { padding: 3.5rem 0 2.5rem; border-bottom: 1px solid var(--rule); }
+  header.masthead .lede {
+    font-family: "IBM Plex Serif", Georgia, serif;
+    font-size: 1.25rem;
+    color: var(--ink-2);
+    margin-top: 1.2rem;
+    max-width: 60ch;
+  }
+  .meta { font-size: 0.9rem; color: var(--ink-2); margin-top: 1.5rem; }
+
+  /* Nav */
+  nav.toc {
+    position: sticky; top: 0; z-index: 5;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+  }
+  nav.toc ul {
+    list-style: none; margin: 0 auto; padding: 0 1.25rem;
+    max-width: var(--wide);
+    display: flex; gap: 1.4rem; overflow-x: auto;
+    font-size: 0.86rem;
+  }
+  nav.toc li { padding: 0.7rem 0; white-space: nowrap; }
+  nav.toc a { color: var(--ink-2); text-decoration: none; }
+  nav.toc a:hover { color: var(--ink); }
+
+  /* Legend */
+  .legend { display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 0.9rem; margin: 1.5rem 0 0; }
+  .legend span::before {
+    content: ""; display: inline-block; width: 0.75em; height: 0.75em; border-radius: 50%;
+    margin-right: 0.45em; vertical-align: -0.02em;
+  }
+  .legend .h::before { background: var(--human); }
+  .legend .a::before { background: var(--agent); }
+  .human { color: var(--human); font-weight: 500; }
+  .agent { color: var(--agent); font-weight: 500; }
+
+  /* Big numbers for bandwidth */
+  .band {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px;
+    background: var(--rule); border: 1px solid var(--rule); margin: 1.5rem 0 1.5rem;
+  }
+  .band div { background: var(--paper-2); padding: 1rem 1.1rem; }
+  .band .n {
+    font-family: "IBM Plex Serif", Georgia, serif; font-size: 1.9rem; font-weight: 500;
+    font-variant-numeric: tabular-nums; line-height: 1.1;
+  }
+  .band .l { font-size: 0.82rem; color: var(--ink-2); margin-top: 0.3rem; }
+
+  /* Loop diagram */
+  figure { margin: 1.5rem 0 2rem; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: 0.85rem; color: var(--ink-2); margin-top: 0.6rem; }
+
+  /* Stage blocks */
+  .stage { border-top: 1px solid var(--rule); padding-top: 1.5rem; margin-top: 2.5rem; }
+  .stage .eyebrow { display: block; margin-bottom: 0.3rem; }
+  .kv { display: grid; grid-template-columns: 9.5rem 1fr; gap: 0.4rem 1rem; margin: 1rem 0 1.2rem; font-size: 0.95rem; }
+  .kv dt { color: var(--ink-2); font-weight: 500; }
+  .kv dd { margin: 0; }
+  @media (max-width: 560px) { .kv { grid-template-columns: 1fr; } .kv dt { margin-top: 0.5rem; } }
+
+  /* Folder listing */
+  .folder { font-family: "IBM Plex Mono", Menlo, monospace; font-size: 0.86rem; line-height: 1.7; background: var(--code-bg); padding: 1.1rem 1.3rem; border-radius: 4px; overflow-x: auto; }
+  .folder .row { display: grid; grid-template-columns: 17ch 1fr; gap: 1rem; white-space: nowrap; }
+  .folder .row.h .name { color: var(--human); }
+  .folder .row.a .name { color: var(--agent); }
+  .folder .desc { color: var(--ink-2); font-family: "IBM Plex Sans", sans-serif; white-space: normal; }
+
+  /* Table */
+  .tablewrap { overflow-x: auto; margin: 1.2rem 0 1.5rem; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.93rem; }
+  th, td { text-align: left; vertical-align: top; padding: 0.65rem 0.8rem; border-bottom: 1px solid var(--rule); }
+  th { font-weight: 500; color: var(--ink-2); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  td:first-child { color: var(--ink-2); }
+
+  /* Principles */
+  ol.principles { padding-left: 0; list-style: none; counter-reset: p; margin: 1.2rem 0; }
+  ol.principles li { counter-increment: p; display: grid; grid-template-columns: 2.6rem 1fr; gap: 0.6rem; padding: 0.8rem 0; border-top: 1px solid var(--rule); }
+  ol.principles li::before {
+    content: counter(p, decimal-leading-zero);
+    font-family: "IBM Plex Mono", monospace; color: var(--ink-2); font-size: 0.85rem; padding-top: 0.25rem;
+  }
+  ol.principles strong { font-weight: 600; }
+
+  /* Callouts */
+  .note { border-left: 3px solid var(--agent); background: var(--agent-soft); padding: 0.9rem 1.1rem; margin: 1.2rem 0; font-size: 0.95rem; }
+  .note.h { border-left-color: var(--human); background: var(--human-soft); }
+  .note p:last-child { margin-bottom: 0; }
+
+  /* Get the spec */
+
+  footer { border-top: 1px solid var(--rule); margin-top: 4rem; padding: 2rem 0 3rem; font-size: 0.88rem; color: var(--ink-2); }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+
+<header class="masthead">
+  <div class="wrap">
+    <span class="eyebrow">Attoworld · September 2026 · Version 1</span>
+    <h1>The AI-Native Research Playbook</h1>
+    <p class="lede">How a researcher and a coding agent push a project from questions to findings and back, with the human's judgment where it counts and the machine's work everywhere else.</p>
+    <p class="meta">For theorists and experimentalists, students and group leaders. Two colours run through this page: <span class="human">red is what you own and do</span>; <span class="agent">blue is what the agent owns and does</span>.</p>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <ul>
+    <li><a href="#why">Why now</a></li>
+    <li><a href="#loop">The loop</a></li>
+    <li><a href="#stages">Six stations</a></li>
+    <li><a href="#territories">Two territories</a></li>
+    <li><a href="#voice">The agent speaks</a></li>
+    <li><a href="#shifts">What changes</a></li>
+    <li><a href="#principles">Ten principles</a></li>
+    <li><a href="#survive">What survives</a></li>
+    <li><a href="#start">Start</a></li>
+  </ul>
+</nav>
+
+<main>
+<div class="wrap">
+
+<h2 id="why">The bottleneck moved</h2>
+<p>It is worth being blunt about where the bottleneck went. The derivation, the convergence study, the literature search, the analysis pipeline, the first draft of the progress report: an agent produces each of them in minutes, to a standard that keeps rising. What has not sped up is you.</p>
+
+<div class="band" aria-label="Bandwidth comparison">
+  <div><div class="n">~250</div><div class="l">words per minute you read</div></div>
+  <div><div class="n">~40</div><div class="l">words per minute you write</div></div>
+  <div><div class="n">4</div><div class="l">things working memory holds</div></div>
+  <div><div class="n">1</div><div class="l">of you, and you also run the experiment</div></div>
+</div>
+
+<p>So the scarce resource is <em>bits through the human</em>: what you must read, decide and specify. Machine work, tokens and compute are abundant. Every design choice in this playbook is settled by that one tie-breaker, and it inverts an intuition: the system should often do far more work in order to show you less. Run the limiting cases, the convergence test and an adversarial review, and report one conclusion with the checks beneath it. Reporting three candidate analyses for you to choose between is a defect.</p>
+
+<p>It also fixes what the agent may ask you. You are asked what only you know: what is interesting, what was tried before, what the detector does above saturation, which of two framings matters. You are never asked what the agent could have found by reading the record. And it fixes what you read: after the first briefing, you read what changed, not the state of everything.</p>
+
+<div class="note h"><p><strong>This is not an autonomous researcher.</strong> It is a system for delegating to agents what agents do well, getting from you what only you have, and removing the places where you were the bottleneck by accident rather than by design. You sign the paper and stand at the talk. Nothing enters the record and nothing leaves the project without your hand.</p></div>
+
+<h2 id="loop">The loop</h2>
+<p>Research is a path from questions to plans to actions to findings, and back to questions. This is a more practical frame than "hypothesis, experiment, hypothesis": a question need not be a hypothesis, an action need not be an experiment, a finding need not be a confirmation. It is common to theory and experiment, to a doctoral student and to a group leader. Each station has a natural artifact, and each artifact appears as a byproduct of doing the work, never as an act of documentation.</p>
+</div>
+
+<div class="wide">
+<figure>
+  <svg viewBox="0 0 1000 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="loopTitle">
+    <title id="loopTitle">The research loop: question, plan, actions, verify, findings, and back to question; communication leaves the loop.</title>
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="var(--ink-2)"/>
+      </marker>
+    </defs>
+
+    <!-- stations -->
+    <g stroke-width="1.5">
+      <rect x="20"  y="40" width="210" height="125" rx="3" fill="var(--human-soft)" stroke="var(--human)"/>
+      <rect x="270" y="40" width="210" height="125" rx="3" fill="var(--human-soft)" stroke="var(--human)"/>
+      <rect x="520" y="40" width="210" height="125" rx="3" fill="var(--agent-soft)" stroke="var(--agent)"/>
+      <rect x="770" y="40" width="210" height="125" rx="3" fill="var(--agent-soft)" stroke="var(--agent)"/>
+      <rect x="770" y="250" width="210" height="105" rx="3" fill="var(--human-soft)" stroke="var(--human)"/>
+      <rect x="520" y="380" width="210" height="75" rx="3" fill="var(--human-soft)" stroke="var(--human)" stroke-dasharray="5 4"/>
+    </g>
+
+    <g text-anchor="middle" font-family="IBM Plex Serif, Georgia, serif" font-size="22" fill="var(--ink)">
+      <text x="125" y="80">Question</text>
+      <text x="375" y="80">Plan</text>
+      <text x="625" y="80">Actions</text>
+      <text x="875" y="80">Verify</text>
+      <text x="875" y="290">Findings</text>
+      <text x="625" y="413" font-size="20">Communicate</text>
+    </g>
+
+    <g text-anchor="middle" font-family="IBM Plex Mono, Menlo, monospace" font-size="13" fill="var(--ink-2)">
+      <text x="125" y="106">question document</text>
+      <text x="375" y="106">PLAN.md</text>
+      <text x="625" y="106">the work</text>
+      <text x="875" y="106">fresh context</text>
+      <text x="875" y="316">facts.md</text>
+      <text x="625" y="436">you send</text>
+    </g>
+
+    <g text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="var(--ink-2)">
+      <text x="125" y="132">you state it,</text>
+      <text x="125" y="149">the agent writes it up</text>
+      <text x="375" y="132">the agent drafts,</text>
+      <text x="375" y="149">you approve</text>
+      <text x="625" y="132">the agent does; you do</text>
+      <text x="625" y="149">what only you can</text>
+      <text x="875" y="132">a second context</text>
+      <text x="875" y="149">reproduces every check</text>
+      <text x="875" y="342">yours, on your approval</text>
+    </g>
+
+    <!-- flow -->
+    <g fill="none" stroke="var(--ink-2)" stroke-width="1.5" marker-end="url(#arr)">
+      <path d="M234,102 H262"/>
+      <path d="M484,102 H512"/>
+      <path d="M734,102 H762"/>
+      <path d="M875,169 V242"/>
+      <path d="M766,302 H145 Q125,302 125,282 V172"/>
+      <path d="M875,359 V417 H738" stroke-dasharray="5 4" stroke="var(--human)"/>
+    </g>
+
+    <g font-family="IBM Plex Sans, sans-serif" font-size="13" fill="var(--ink-2)" text-anchor="middle">
+      <text x="445" y="292" font-style="italic">findings raise questions; decisions carry revisit conditions</text>
+    </g>
+  </svg>
+  <figcaption>Red stations are where your judgment enters; blue stations are where the machine works. Communication sits outside the loop because it leaves the project, and only you send.</figcaption>
+</figure>
+</div>
+
+<div class="wrap">
+<h2 id="stages">Six stations, six artifacts</h2>
+<p>Six stations, each with an artifact that outlives the session and a point where your judgment enters. Four of them sit on the loop itself. Two are drawn apart from it: verification, because a result does not announce its own errors, and communication, because it leaves the project and only you send.</p>
+
+<section class="stage">
+  <span class="eyebrow">Station 1 · Question</span>
+  <h3>A question with what would count as an answer</h3>
+  <dl class="kv">
+    <dt>Key artifact</dt><dd>A question document: the question in one sentence, why it matters, what would count as an answer, what is already known and from where, constraints, priority.</dd>
+    <dt class="human">You</dt><dd>State it in conversation. Answer four or five short prompts, as choices where possible. Endorse the answer criterion and the priority.</dd>
+    <dt class="agent">Agent</dt><dd>Interviews you, mines the record for what is already known, writes the document, proposes one line of it for the project page.</dd>
+    <dt>Gate</dt><dd>The framing is yours. The agent invites your position before offering its own, and never invents an answer criterion you did not endorse.</dd>
+  </dl>
+  <p>A question may be <em>exploratory</em>: "something is odd in the residual above 200 GW/cm²" is a legitimate question whose answer will be recognised rather than specified. The agent is forbidden to force precision on it. Curiosity that is not yet a question is still written down.</p>
+</section>
+
+<section class="stage">
+  <span class="eyebrow">Station 2 · Plan</span>
+  <h3>Approve plans, not outputs</h3>
+  <dl class="kv">
+    <dt>Key artifact</dt><dd><code>PLAN.md</code>: the questions it serves, the approach and why, ordered steps each with an owner and a completion criterion, which steps are independent, decision points, budget, risks, and the date you approved it.</dd>
+    <dt class="human">You</dt><dd>Say how you would approach it, if you have a view. Read the plan. Change what you like. Approve.</dd>
+    <dt class="agent">Agent</dt><dd>Drafts the plan, marks which steps are yours and prepares what makes your part fastest: the email that asks the experimentalist for error bars, the parameter table, the two-option memo.</dd>
+    <dt>Gate</dt><dd>Work that outlasts a session runs on an approved plan, and so does work a session could finish whose cost you would want weighed first — restructuring code, a long run, a shared allocation. Otherwise a request your agent can finish in the session you asked it is just a request: it sequences its own moves, and where your harness already shows you that sequence, the system does not make you approve it twice.</dd>
+  </dl>
+  <p>Your judgment is cheapest before the work starts and most expensive after, when it has to be applied to outputs. The plan is where you spend it. It is also where the division of labour is written down: <span class="human">measure the 100 nm film</span> and <span class="agent">rerun the pipeline and inject a synthetic signal</span> are both steps, with different owners.</p>
+</section>
+
+<section class="stage">
+  <span class="eyebrow">Station 3 · Actions</span>
+  <h3>The agent does; you do what only you can</h3>
+  <dl class="kv">
+    <dt>Key artifacts</dt><dd>Code, notes, computed objects with provenance, and a finding document for every claim, with status <code>tentative</code>.</dd>
+    <dt class="human">You</dt><dd>Turn the knob. Talk to the collaborator. Decide at the decision points. Correct in one sentence with the reason.</dd>
+    <dt class="agent">Agent</dt><dd>Derives, computes, analyses, searches. Runs every applicable check before you see anything. Writes the finding with its claim, what it means, its evidence, its provenance and its verification record.</dd>
+    <dt>Gate</dt><dd>Raw data is never touched. Every plot carries the script, the data, the code version, the parameters and the date. The agent may set no status but <code>tentative</code>.</dd>
+  </dl>
+  <p>Two things are worth naming here. <strong>Parallel sessions:</strong> independent plan steps run in separate contexts, and the plan says which steps are independent. <strong>Institutional knowledge as skills:</strong> when a procedure recurs, running this simulation pipeline, building this manuscript, the agent proposes a project-local skill, versioned with the work, and you approve it. This is how competence at a project's recurring work compounds instead of being rediscovered.</p>
+</section>
+
+<section class="stage">
+  <span class="eyebrow">Station 4 · Verify</span>
+  <h3>Every finding checks itself, and a stranger checks it again</h3>
+  <dl class="kv">
+    <dt>Key artifact</dt><dd>The verification record inside the finding: every check applied, how it was run, what it produced; and the review record: who reviewed, in which context, when.</dd>
+    <dt class="human">You</dt><dd>Read three lines: the claim, what it means, and which checks were not run. Ask for more only if you want it.</dd>
+    <dt class="agent">Agent</dt><dd>A second context that did not produce the finding reproduces every recorded check, runs the ones the producer omitted, attacks the claim, and sets the status: <code>verified</code>, <code>refuted</code>, or still <code>tentative</code> with what would settle it.</dd>
+    <dt>Gate</dt><dd>A check is reproducible or it is not a check: a command that was run, a computation that was evaluated, a location in a source that was read. "Checked, looks fine" does not qualify.</dd>
+  </dl>
+  <p>Nothing checks a research result automatically. A wrong derivation runs to the end and looks like a result; a wrong analysis produces a beautiful plot. So what stands in for a ground truth is named per kind of evidence: for a <em>derived</em> result, dimensional consistency, limiting cases, symmetries, a known special case, numerical evaluation against brute force, a second route derived rather than recalled; for a <em>computed</em> one, convergence in every discretisation parameter, a conserved quantity, a published figure reproduced, regeneration from a clean checkout; for a <em>measured</em> one, the pipeline rerun from raw data, a synthetic signal recovered, the expectation written down before the measurement compared with what came; for a <em>literature</em> claim, the sentence located in the source at the stated page, because a source that was not opened is a lead and not a citation. And for all of them, the review runs where the producer's blind spot cannot follow: in a fresh context.</p>
+</section>
+
+<section class="stage">
+  <span class="eyebrow">Station 5 · Communicate</span>
+  <h3>The agent drafts; you send</h3>
+  <dl class="kv">
+    <dt>Key artifacts</dt><dd>Drafts: the email to the collaborator, the progress report, the talk outline, the manuscript section, the response to the referee.</dd>
+    <dt class="human">You</dt><dd>Read it. Change it. Send it, submit it, sign it.</dd>
+    <dt class="agent">Agent</dt><dd>Writes for the recipient and the genre. States every claim at the strength its status allows and labels a tentative finding as such. Traces every number to a finding or a fact. Flags any commitment made in your name.</dd>
+    <dt>Gate</dt><dd>Nothing leaves the project by an agent's hand. Where the harness offers a deterministic gate, it enforces this; where it does not, the rule does, and you are told which.</dd>
+  </dl>
+</section>
+
+<section class="stage">
+  <span class="eyebrow">Station 6 · Close the loop</span>
+  <h3>The backlog fills itself; you choose from it</h3>
+  <dl class="kv">
+    <dt>Key artifacts</dt><dd>The candidates note, where what was learned accrues; the pending note, where what waits on you accrues; and <code>decisions.md</code>, where every decision carries the condition under which to revisit it.</dd>
+    <dt class="human">You</dt><dd>Say "sweep" at the end of a session that taught the system something. Approve what it proposes, tier by tier. Glance at what waits on you.</dd>
+    <dt class="agent">Agent</dt><dd>Notes every correction, preference and new fact as it happens. Notes every question a finding raises. Notices when a revisit condition has been met and says so. Proposes each item for the record, with a destination, and writes only on approval.</dd>
+    <dt>Gate</dt><dd>Nothing enters the record from conversation except through a sweep you approved. Nothing learns from a corrected output; things learn from a recorded reason.</dd>
+  </dl>
+  <p>This station could close on its own, with watchers that file new questions while you sleep. In this first version it deliberately does not. Literature monitors, instrument watchers and deadline trackers are named as extensions, to be added when a real failure justifies them. What the loop does close on its own is the part that matters most: a finding raises questions, a decision carries a revisit condition, and the next planning session puts both on the table.</p>
+</section>
+
+<h2 id="territories">Two territories</h2>
+<p>A project folder has two territories. <span class="agent">The record</span> is the agent's: six files, an inbox with two notes, and a filing cabinet, maintained under fixed rules. <span class="human">The work</span> is yours: everything else, arranged however you like, including code in its own git repository and, if you want, a second agent maintaining it. Skills read the work freely and write to it when you ask, but never file, catalogue or prune it. The record points at the work; it never swallows it.</p>
+<p>One line keeps the boundary honest: <span class="agent">the filing cabinet is the agent's alone</span>. <code>INDEX.md</code> promises that everything under it is indexed and reachable by a trigger, and a file you add, rename, move or delete there by hand breaks that promise silently — nothing checks it afterwards. Material goes into the inbox and the agent files it; when something should go, you approve a revision. Everywhere else you rearrange at will.</p>
+</div>
+
+<div class="wide">
+<div class="folder" aria-label="Project folder layout">
+  <div class="row h"><span class="name">my-project/</span><span class="desc"></span></div>
+  <div class="row h"><span class="name">├── AGENTS.md</span><span class="desc">points at the root convention and carries the standing rules; you own it</span></div>
+  <div class="row a"><span class="name">├── PROJECT.md</span><span class="desc">what and where: aim, state, status, next steps, open questions, exploration budget · 800 words</span></div>
+  <div class="row a"><span class="name">├── PLAN.md</span><span class="desc">how: the current plan, with owners and completion criteria · you may edit it by hand</span></div>
+  <div class="row a"><span class="name">├── facts.md</span><span class="desc">what we rely on: each claim with provenance and a retirement condition</span></div>
+  <div class="row a"><span class="name">├── decisions.md</span><span class="desc">why: append-only, with revisit conditions</span></div>
+  <div class="row a"><span class="name">├── log.md</span><span class="desc">what happened: one line per operation, read forward from a date</span></div>
+  <div class="row a"><span class="name">├── INDEX.md</span><span class="desc">where to look, and when: a trigger map, never a summary</span></div>
+  <div class="row a"><span class="name">├── _WORKSPACE/</span><span class="desc">in-tray and bench: what you drop in, and what the agent makes with no home yet</span></div>
+  <div class="row a"><span class="name">│   ├── candidates.md</span><span class="desc">what the agent learned, waiting for your approval at the next sweep</span></div>
+  <div class="row a"><span class="name">│   └── pending.md</span><span class="desc">what waits on you: queued decisions, and the agent's proposals</span></div>
+  <div class="row a"><span class="name">├── _FILED/</span><span class="desc">the agent's filing cabinet; you do not edit this</span></div>
+  <div class="row h"><span class="name">└── research/</span><span class="desc">yours, named by you: questions/, findings/, drafts/, explore/, model/ …</span></div>
+</div>
+</div>
+
+<div class="wrap">
+<p style="margin-top:1.2rem">The six record files answer six different questions at six different times. Merging them into one README means reading all of them to answer any of them, which spends the only scarce resource. And the question and finding documents live in <em>your</em> territory on purpose: the record holds the claim of a verified finding with the document as provenance, but the document itself, with its evidence, method and checks, is yours to arrange by topic, by paper, by year, or however your field does it.</p>
+
+<h2 id="voice">The agent speaks</h2>
+<p>A system that remembers, executes and verifies is an excellent assistant and still not a collaborator: it cannot disagree with you. The rule that it forms no view of <em>what matters</em> slides easily into forming no view of <em>what is true</em>, and then you are working alone with a very good machine. Four things prevent that, and they are the difference between a tool and a colleague.</p>
+
+<h3>A voice, and a place for it</h3>
+<p>When the agent disagrees with a plan, a claim or the record, or sees a conjecture, a better approach, a connection between two findings, or a question you have not asked, it says so in one line with its reason, at the point where it arises, and then does what you asked. The line goes into the pending note so it survives the session. You owe it a glance, nothing more. A proposal you pick up becomes a question; one you dismiss is removed at the next sweep. The agent forms these views because they are about what is true, possible or promising. It forms none about what you should want, and a proposal never carries a priority.</p>
+
+<h3>Exploration within a budget</h3>
+<p>Approved plans suit work whose shape is known. The frontier is also found by trying twenty things and keeping three, which agents do well and cheaply and you do not. So you may grant an exploration budget in the project page, say four hours of laptop compute per night in a folder set aside for it. Within it the agent explores without a plan, produces no findings, touches no record file, and reports only surprises. Anything interesting becomes a finding only after you turn it into a question and a plan step reproduces it with proper checks. No budget means no exploration.</p>
+
+<h3>Decisions that queue instead of stopping</h3>
+<p>When you are at the keyboard, a decision the agent needs is put to you through the harness's question tool. When you are not, in an overnight run, a subagent, or a session you told to continue without you, it is queued in the pending note and the agent continues with every step that does not depend on the answer. You return to a short list of what waited, not to a run that stopped at its first question. You are the system's judgment, never its blocking bottleneck.</p>
+
+<h3>Understanding as a deliverable</h3>
+<p>"Output is the conclusion, reasoning on request" is right for decisions and wrong for findings. A collaborator that leaves you unable to defend your own result at a talk has made you weaker while the record got stronger. So every finding carries what it means, in the words you would use, and accepting a claim into the record asserts that you could defend it. If you cannot, ask, and the agent explains as far as you want; it will not simply redo the work for you.</p>
+
+<div class="note"><p><strong>What the agent may not have a view on:</strong> what matters, what is interesting, what you should want, what to work on next. Those come entirely from what you have written down. A system that ranks your questions by its own lights has stopped being a mirror.</p></div>
+
+<h2 id="shifts">What changes</h2>
+</div>
+<div class="wide">
+<div class="tablewrap">
+<table>
+  <thead><tr><th>Dimension</th><th>How it is usually done</th><th>AI-native</th></tr></thead>
+  <tbody>
+    <tr><td>Where a question lives</td><td>In your head, a notebook, a chat that is gone tomorrow</td><td>A document with what would count as an answer, that an agent can work on</td></tr>
+    <tr><td>Where judgment is applied</td><td>Late, to outputs, after the work is done</td><td>Early, to the plan; deviations update the plan</td></tr>
+    <tr><td>Who checks a result first</td><td>You, reading everything</td><td>A second context that reproduces every check; you read three lines</td></tr>
+    <tr><td>How a result is trusted</td><td>By how well it was presented</td><td>By its status, its verification record and its provenance</td></tr>
+    <tr><td>How the agent learns</td><td>It doesn't; you repeat yourself</td><td>A correction with its reason goes into a file it reads every session</td></tr>
+    <tr><td>What you read</td><td>Everything, to find the one thing</td><td>What changed since you last looked; surprises before confirmations</td></tr>
+    <tr><td>What the agent says unasked</td><td>Nothing</td><td>Disagreement, conjecture, connection, one line each, where you will see it</td></tr>
+    <tr><td>While you are away</td><td>Nothing happens, or it stops at the first question</td><td>Decisions queue; independent steps continue; exploration runs within its budget</td></tr>
+    <tr><td>What leaves the project</td><td>Whatever the chat window produced</td><td>A draft with every claim at its status; you send</td></tr>
+    <tr><td>When the harness is replaced</td><td>Start over</td><td>The files are the standard; give the spec to the new agent</td></tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+<div class="wrap">
+<h2 id="principles">Ten principles</h2>
+<p>If you take one thing from this page, take these ten. Everything else on it follows from them.</p>
+<ol class="principles">
+  <li><span><strong>Questions first.</strong> Every piece of research starts as a written question with what would count as an answer.</span></li>
+  <li><span><strong>Files, not chats.</strong> The interface between you and the agent is a set of files that carry over between sessions, agents and years.</span></li>
+  <li><span><strong>Approve plans, not outputs.</strong> Your judgment is cheapest before the work starts. The agent interviews you, writes the plan, you approve; deviations update the plan.</span></li>
+  <li><span><strong>Every finding checks itself.</strong> Limiting cases, convergence, a located citation, an adversarial review in a fresh context, before you read it. Every finding carries its status.</span></li>
+  <li><span><strong>Teach the system, not the chat.</strong> A correction with its reason goes into a file the agent reads every session. Say it once.</span></li>
+  <li><span><strong>Route judgment through the human, never data.</strong> Layered briefings, news not state, batched decisions as choices, questions only you can answer.</span></li>
+  <li><span><strong>Close the loop.</strong> Findings raise questions and decisions carry revisit conditions; the backlog fills itself and you choose from it.</span></li>
+  <li><span><strong>You send, you sign, you decide.</strong> Nothing leaves the project by an agent's hand.</span></li>
+  <li><span><strong>Provenance everywhere.</strong> Every plot, table and number traces to data, code, parameters and a date.</span></li>
+  <li><span><strong>The agent speaks.</strong> It disagrees, conjectures and proposes in one line where it arises, explores within a budget you grant, keeps working while you are away, and owes you an explanation of every finding. Never about what should matter; always about what is true or could be tried.</span></li>
+</ol>
+
+<h2 id="survive">What survives the next model</h2>
+<p>Agents and models will be replaced, and then replaced again. The point of agreeing on this among colleagues is therefore not an implementation but a small set of <strong>standards</strong> simple enough to keep identical across people and across re-implementations:</p>
+<ul>
+  <li>The six record files and the two inbox notes, their names and what each holds.</li>
+  <li>The shape of a question, a plan and a finding; the four statuses a finding can have; the checks per kind of evidence.</li>
+  <li>What an agent may do to your work: never touch raw data, provenance on every computed object, never send.</li>
+  <li>The three duties: the agent speaks, explores within a budget, and queues rather than stops.</li>
+  <li>The eleven skill names, which request reaches which of them, and what each may and may not do.</li>
+</ul>
+<p>Everything else is implementation, rebuilt freely: the wording of instruction files, the bodies of skills, hooks, subagents, scheduled runs, which agent runs it. A re-implementation is conformant if a project folder written under the old one is read correctly by the new one without conversion. Keep the standard, rebuild the rest, and no running project is ever disrupted by a better model.</p>
+
+<h3>Measuring it</h3>
+<p>If you want numbers, a few are cheap. Leading: time from a question stated to a plan approved; the fraction of findings verified at first review; how many decisions are waiting on you and for how long. Lagging: findings refuted after they entered the record; corrections you had to make twice, which mean the file was not read or was unclear. None of these is a target. A system built to lower a number can lower it by going quiet.</p>
+
+<h2 id="start">Start</h2>
+<p>You need a coding agent you already use, a folder where your projects live, and about an hour. You will not write code; your agent will.</p>
+<ol>
+  <li><strong>Read and edit the spec.</strong> It is written to be edited. If you change only one thing, change the lines that say what the agent asks you and what it settles alone.</li>
+  <li><strong>Give it to your agent</strong> with the one-paragraph build instruction in the getting-started guide. Your edited spec is what the agent builds from, and you keep it wherever you will find it again — change it later and ask for a rebuild; from it the agent writes a short convention document of what is local to you, the instruction files and the eleven skills for your harness, and tells you which rules it can enforce with a gate and which by instruction.</li>
+  <li><strong>Adopt one project.</strong> Not your most important one. Ask it what the state of the project is. If the answer is right, you are running.</li>
+</ol>
+<p>Three skills carry the first week: ask, do, sweep. Four habits carry everything: drop things into the inbox, correct in one sentence with the reason, glance at what waits on you, and send everything yourself.</p>
+
+<p>Everything this page describes lives in one repository: <a href="https://github.com/vsyakovlev77/ai-native-research"><strong>github.com/vsyakovlev77/ai-native-research</strong></a>. Beside this page you will find <a href="https://github.com/vsyakovlev77/ai-native-research/blob/main/SPEC.md">the spec</a>, <a href="https://github.com/vsyakovlev77/ai-native-research/blob/main/PRINCIPLES.md">the principles</a>, <a href="https://github.com/vsyakovlev77/ai-native-research/blob/main/docs/walkthrough.md">a walkthrough</a> of one project from a question to a verified finding, <a href="https://github.com/vsyakovlev77/ai-native-research/blob/main/docs/getting-started.md">a getting-started guide</a> for Claude Code, Codex and Antigravity, and <a href="https://github.com/vsyakovlev77/ai-native-research/blob/main/docs/faq.md">a FAQ</a>. Take the spec, edit it, hand it to your agent. It is <a href="https://github.com/vsyakovlev77/ai-native-research/blob/main/LICENSE">CC BY 4.0</a>: edit it for your group and pass your version on.</p>
+
+<div class="note h"><p><strong>Confidentiality.</strong> Unpublished data, a collaborator's unpublished result, grant text: decide per project what must not leave your machine and write it in one sentence in the project page. Every agent honours it. Members of the Max Planck Society have access to models hosted on GWDG's own infrastructure, which a project can name as the only model permitted for such material. For everyone: do not put into an external AI service anything you would not put into an email to a stranger.</p></div>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Written for colleagues at Attoworld, September 2026. Everything on this page is decided in the spec; this page only explains.</p>
+  </div>
+</footer>
