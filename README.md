@@ -2,9 +2,9 @@
 
 A small convention for working with a coding agent as a collaborator, and a spec from which your own agent builds it. It is shaped by what research needs, and only four of its eleven skills are particular to research: the rest serve any project you run. Files you own, in folders you own, readable without any tool. Designed for Claude Code, OpenAI Codex and Google Antigravity, and for whatever replaces them.
 
-**Start here:** [The playbook](https://claude.ai/code/artifact/b93b9597-6e76-42e3-92b8-4538e4e9a5c6) · [Getting started](docs/getting-started.md) · [Walkthrough](docs/walkthrough.md) · [The spec](SPEC.md) · [The principles](PRINCIPLES.md) · [FAQ](docs/faq.md)
+**Start here:** [The playbook](https://vsyakovlev77.github.io/ai-native-research/) · [Getting started](docs/getting-started.md) · [Walkthrough](docs/walkthrough.md) · [The spec](SPEC.md) · [The principles](PRINCIPLES.md) · [FAQ](docs/faq.md)
 
-The playbook is the one-page explanation of why the system is shaped this way, and the place to start if you are deciding whether any of this is for you; the spec is what your agent builds from. Its source is [`playbook.html`](playbook.html) in this repository, which GitHub shows as source rather than rendering.
+The playbook is the one-page explanation of why the system is shaped this way, and the place to start if you are deciding whether any of this is for you; the spec is what your agent builds from. It is served from this repository at [vsyakovlev77.github.io/ai-native-research](https://vsyakovlev77.github.io/ai-native-research/); its source is [`playbook.html`](playbook.html) here, which GitHub itself shows as source rather than rendering.
 
 ---
 
