@@ -4,7 +4,7 @@ A small convention for working with a coding agent as a collaborator, and a spec
 
 **Start here:** [The playbook](https://vsyakovlev77.github.io/ai-native-research/) · [Getting started](docs/getting-started.md) · [Walkthrough](docs/walkthrough.md) · [The spec](SPEC.md) · [The principles](PRINCIPLES.md) · [FAQ](docs/faq.md)
 
-The playbook is the one-page explanation of why the system is shaped this way, and the place to start if you are deciding whether any of this is for you; the spec is what your agent builds from. It is served from this repository at [vsyakovlev77.github.io/ai-native-research](https://vsyakovlev77.github.io/ai-native-research/); its source is [`playbook.html`](playbook.html) here, which GitHub itself shows as source rather than rendering.
+The playbook begins with a one-page explanation of why the system is shaped this way, and is the place to start if you are deciding whether any of this is for you; the spec is what your agent builds from. It is served from this repository at [vsyakovlev77.github.io/ai-native-research](https://vsyakovlev77.github.io/ai-native-research/); its source is [`playbook.html`](playbook.html) here, which GitHub itself shows as source rather than rendering.
 
 ---
 
