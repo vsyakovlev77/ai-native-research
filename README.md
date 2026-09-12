@@ -23,7 +23,7 @@ Little of that record is particular to research. A proposal, a course, a piece o
 5. **Teach the system, not the chat.** A correction with its reason goes into a file the agent reads every session. Say it once.
 6. **Route judgment through the human, never data.** Layered briefings, news not state, batched decisions as choices, questions only you can answer.
 7. **Close the loop.** Findings raise questions and decisions carry revisit conditions; the backlog fills itself and you choose from it.
-8. **You send, you sign, you decide.** Nothing leaves the project by an agent's hand.
+8. **Nothing leaves without you.** Not by a route you did not declare, not by a send you did not approve after seeing what would go — and whoever signed it, you are the one who answers for it.
 9. **Provenance everywhere.** Every plot, table and number traces to data, code, parameters and a date.
 10. **The agent speaks.** It disagrees, conjectures and proposes in one line where it arises, explores within a budget you grant, keeps working while you are away, and owes you an explanation of every finding. Never about what should matter; always about what is true or could be tried.
 
