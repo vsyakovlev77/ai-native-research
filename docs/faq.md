@@ -35,7 +35,7 @@ Share the work, not the record. A shared git repository of code, data and docume
 Nothing in the system. Two habits: ask for the explanation, not just the result ("walk me through the derivation in F4"), and put your supervisor's comments into `_WORKSPACE/` so they get filed and their reasons recorded. Your understanding is a deliverable; the system will not decide for you that you need it.
 
 **What if my agent has no hooks?**
-Then the rules the spec says are gated — nothing sent without your authorisation, never touch raw data — hold by instruction alone. The build instruction asks the agent to tell you which rules are gated on your harness. Knowing that is enough; agents follow instruction files well, and nothing goes out that you were not shown first.
+Then the rules the spec says are gated — nothing sent without your authorisation, never touch raw data — hold by instruction alone. The build instruction asks the agent to tell you which rules are gated on your harness. Knowing that is enough; agents follow instruction files well, and nothing goes out except along a route you declared or a send you were shown first.
 
 **What survives when I switch agents next year?**
 Everything §M of the spec calls the standard: the record files and their meaning, the shapes of a question, a plan and a finding, the status vocabulary, the working-tree rules, the skill names and their boundaries. Re-implementing means giving the spec to the new agent. A project written under the old implementation must be readable by the new one without conversion; that is the test.

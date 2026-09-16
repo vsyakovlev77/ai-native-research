@@ -34,7 +34,8 @@ A project folder looks like this:
 ```
 my-project/
 ├── AGENTS.md        instruction file for the agent
-├── PROJECT.md       what and where: aim, state, status, next steps, open questions — 800 words
+├── PROJECT.md       what and where: aim, state, status, next steps, open questions,
+│                    exploration budget — 800 words
 ├── PLAN.md          how: the current plan, with owners and completion criteria
 ├── facts.md         what we rely on, each with provenance and a retirement condition
 ├── decisions.md     why, append-only, with revisit conditions

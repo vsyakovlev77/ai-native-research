@@ -47,7 +47,7 @@ They live there rather than in `AGENTS.md` because the instruction file's name d
 
 The theorist opens the project in their coding agent and says:
 
-> Ben's new data shows a phase shift of the reflected probe that grows with pump intensity. I want to know whether the plain Drude picture with a hot-electron collision rate explains it. Use `research-question`.
+> The experimentalist's new data shows a phase shift of the reflected probe that grows with pump intensity. I want to know whether the plain Drude picture with a hot-electron collision rate explains it. Use `research-question`.
 
 The skill reads `PROJECT.md` and `INDEX.md`, then asks four things — through the agent's question tool, as choices where it can:
 
@@ -134,7 +134,7 @@ The theorist reads it, changes "within line width" to "within 5 %", and says "ap
   - *Revisit condition*: If step 4 shows a residual above the error bars at the highest intensity.
 ```
 
-`PROJECT.md` next steps now read: "1. (you) get error bars and pump waveform from Ben — draft email is in `research/drafts/`. 2. (agent) model + Fig. 3 reproduction. …"
+`PROJECT.md` next steps now read: "1. (you) get error bars and pump waveform from the experimentalist — draft email is in `research/drafts/`. 2. (agent) model + Fig. 3 reproduction. …"
 
 ---
 
@@ -264,7 +264,7 @@ Also in the note, a queued decision: the run wanted to extend one sweep beyond t
 
 ## Day 3 — text that leaves the project
 
-> Draft a progress note to Ben on Q3. Use `research-write`.
+> Draft a progress note to the experimentalist on Q3. Use `research-write`.
 
 The skill reads `facts.md` and F7, and writes `research/drafts/2026-09-13-to-ben.md`, short, with the verified claim stated plainly and the residual stated as verified but unexplained. It does not send it. It escalates one thing: "You asked me to say we will have the Boltzmann result by Friday. That is a commitment on your behalf and no plan exists for it. Include it?" The theorist says no, reads the draft, and sends it themselves.
 
