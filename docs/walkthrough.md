@@ -211,7 +211,7 @@ and appends to the candidates note: "F7 verified — propose for facts.md".
 
 > Sweep.
 
-`project-sweep` reads the candidates note and proposes, tier by tier, through the question tool:
+`project-sweep` reads the candidates note and proposes through the question tool, marking each item recommended or the theorist's call:
 
 - **facts.md** (recommended): the claim of F7, provenance `research/findings/F7-drude-phase-shift.md` reviewed by a subagent of the producing session, retirement condition "a Boltzmann treatment or new data changes the residual at 250 GW/cm²".
 - **PROJECT.md** (recommended): open question "What accounts for the 0.12 rad residual at 250 GW/cm²?"; status updated; Q3 off the open list.
