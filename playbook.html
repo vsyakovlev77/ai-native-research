@@ -159,7 +159,7 @@
 
   /* Folder listing */
   .folder { font-family: "IBM Plex Mono", Menlo, monospace; font-size: 0.86rem; line-height: 1.7; background: var(--code-bg); padding: 1.1rem 1.3rem; border-radius: 4px; overflow-x: auto; }
-  .folder .row { display: grid; grid-template-columns: 17ch 1fr; gap: 1rem; white-space: nowrap; }
+  .folder .row { display: grid; grid-template-columns: minmax(17ch, max-content) 1fr; gap: 1rem; white-space: nowrap; }
   .folder .row.h .name { color: var(--human); }
   .folder .row.a .name { color: var(--agent); }
   .folder .desc { color: var(--ink-2); font-family: "IBM Plex Sans", sans-serif; white-space: normal; }
