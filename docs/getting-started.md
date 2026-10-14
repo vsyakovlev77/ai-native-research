@@ -69,7 +69,7 @@ The spec fixes the file names of the record and the skill names; the harness fix
 | Instruction file, global | `~/.claude/CLAUDE.md` | `~/.codex/AGENTS.md` | `~/.gemini/GEMINI.md` |
 | Skills, user level | `~/.claude/skills/<name>/SKILL.md` | `~/.agents/skills/<name>/SKILL.md` | `~/.gemini/config/skills/<name>/SKILL.md` |
 | Skills, project level | `.claude/skills/` | `.agents/skills/` (also read at parent and repository root) | `.agents/skills/` |
-| Interactive question tool | yes (`AskUserQuestion`) | plan-mode input only; escalations otherwise end the turn | yes (`ask_user`) |
+| Interactive question tool | yes (`AskUserQuestion`) | plan-mode input only; escalations end the turn, and an operation you started yourself in the app counts as attended | yes (`ask_user`) |
 | Subagent with fresh context | yes (`.claude/agents/`) | yes (`.codex/agents/*.toml`) | yes (`.agents/agents/*.md`) |
 | Hooks (deterministic gates) | yes: `PreToolUse` can allow, ask or deny | partial: prompt-submit and session hooks; tool-use hooks arriving | yes: `PreToolUse` can allow, ask or deny |
 | Scheduled runs | scheduled tasks | Automations | sidecars |
